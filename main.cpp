@@ -1,14 +1,12 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
-#include <map>
+
 using namespace std;
 
 string m[8];
 vector<string>ans;
 string nums;
 void recurse(int iter, string s){
-    //cout << iter << " " << s << endl;
     if(iter == nums.length() && s.length() == nums.length()){
         ans.push_back(s);
         return;
@@ -41,9 +39,4 @@ vector<string> lttrCombos(string digits) {
     recurse(0,"");
     return ans;
 }
-int main(){
-    vector<string>v = lttrCombos("234");
-    for(string ele : v){
-        cout << ele << " ";
-    }
-}
+
