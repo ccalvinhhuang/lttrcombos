@@ -1,42 +1,37 @@
 #include <iostream>
 #include <vector>
+#include <map>
 
 using namespace std;
 
-string m[8];
-vector<string>ans;
-string nums;
-void recurse(int iter, string s){
-    if(iter == nums.length() && s.length() == nums.length()){
-        ans.push_back(s);
+void recurse(string& digits, int i, map<char, string>&m, vector<string>& ans, string cur_string){
+    if(cur_string.length() == digits.length()){
+        ans.push_back(cur_string);
         return;
     }
-    for(int i = iter; i < nums.length(); i++){
-        int cur_stem = (nums[i] - '0') - 2;
-        for(int j = 0; j < m[cur_stem].length(); j++){
-            recurse(i + 1, s + m[cur_stem][j]);
-        }
+    for(char c : m[digits[i]]){
+        recurse(digits, i + 1, m, ans, cur_string + c);
     }
-
 }
-vector<string> lttrCombos(string digits) {
-    nums = digits;
-    string temp = "abc";
-    for(int i = 0; i < 8; i++){
-        m[i] = temp;
-        int add = 3;
-        if(i == 5){
-            m[i] += 's';
-            add = 4;
-        }
-        if(i == 7){
-            m[i] += 'z';
-        }
-        for(int j = 0; j < 3; j++){
-            temp[j] += add;
-        }
-    }
-    recurse(0,"");
+vector<string> letterCombinations(string digits) {
+    map<char, string>m;
+    m['2'] = "abc";
+    m['3'] = "def";
+    m['4'] = "ghi";
+    m['5'] = "jkl";
+    m['6'] = "mno";
+    m['7'] = "pqrs";
+    m['8'] = "tuv";
+    m['9'] = "wxyz";
+    vector<string> ans;
+    recurse(digits, 0, m, ans, "");
+    if(digits.length() == 0) return {};
     return ans;
 }
 
+int main(){
+    vector<string> p = letterCombinations("234");
+    for(string k : p){
+        cout << k << " ";
+    }
+}
